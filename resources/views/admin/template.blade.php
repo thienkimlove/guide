@@ -17,7 +17,7 @@
     <link href="{{ url('/css/admin/select2.min.css')}}" rel="stylesheet" />
     <link href="{{ url('/js/admin/datetimepicker/build/jquery.datetimepicker.min.css')}}" rel="stylesheet" />
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="{{url('js/admin/jquery-ui.css')}}">
 
 </head>
 
@@ -77,15 +77,15 @@
                     @foreach (config('site')['content'] as $key => $content)
 
                     <li>
-                        <a><i class="fa fa-files-o fa-fw"></i>{{ucfirst($key)}}<span class="fa arrow"></span></a>
+                        <a><i class="fa fa-files-o fa-fw"></i>{{$content['name']}}<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
 
                             <li>
-                                <a href="{{url('admin', $key)}}">List</a>
+                                <a href="{{url('admin', $key)}}">Danh sách</a>
                             </li>
 
                             <li>
-                                <a href="{{url('admin/'.$key.'/create')}}">Add</a>
+                                <a href="{{url('admin/'.$key.'/create')}}">Thêm mới</a>
                             </li>
                         </ul>
                     </li>
@@ -111,11 +111,11 @@
     window.baseUrl = '{{url('/')}}';
 </script>
 
-<script src="{{url('/js/admin/admin.js')}}"></script>
-<script src="{{url('/js/admin/ckeditor/ckeditor.js')}}"></script>
-<script src="{{url('/js/admin/select2.min.js')}}"></script>
+<script src="{{url('js/admin/admin.js')}}"></script>
+<script src="{{url('js/admin/ckeditor/ckeditor.js')}}"></script>
+<script src="{{url('js/admin/select2.min.js')}}"></script>
 <script src="{{url('js/admin/datetimepicker/build/jquery.datetimepicker.full.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{url('js/admin/jquery-ui.js')}}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
         headers: { 'X-CSRF-Token' : $('meta[name=csrf_token]').attr('content') }

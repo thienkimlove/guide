@@ -3,23 +3,28 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Position</h1>
+            <h1 class="page-header">Vị Trí Đường</h1>
         </div>
 
     </div>
     <div class="row">
         <div class="col-lg-12">
-            @if (!empty($position))
-            <h2>Edit</h2>
-            {!! Form::model($position, ['method' => 'PATCH', 'route' => ['positions.update', $position->id]]) !!}
+            @if ($content->id)
+                <h2>Edit</h2>
+                {!! Form::model($content, ['method' => 'PATCH', 'route' => [$model.'.update', $content->id], 'files' => true]) !!}
             @else
                 <h2>Add</h2>
-                {!! Form::model($position = new App\Position, ['route' => ['positions.store']]) !!}
+                {!! Form::model($content, ['route' => [$model.'.store'], 'files' => true]) !!}
             @endif
 
             <div class="form-group">
                 {!! Form::label('name', 'Name') !!}
                 {!! Form::text('name', null, ['class' => 'form-control']) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('frontend_name', 'Display Name') !!}
+                {!! Form::text('frontend_name', null, ['class' => 'form-control']) !!}
             </div>
 
             <div class="form-group">

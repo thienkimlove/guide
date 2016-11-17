@@ -2,74 +2,94 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Position;
 use Illuminate\Http\Request;
 use Validator;
 
 class PositionsController extends AdminController
 {
+
+    public $model = 'positions';
+
+    public $validator = [
+        'name' => 'required'
+    ];
+
     public function index()
     {
-        $positions = Position::paginate(10);
+        $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
+        $contents = $modelClass::paginate(10);
 
-        return view('admin.position.index', compact('positions'));
+        return view('admin.'.$this->model.'.index', compact('contents'))->with('model', $this->model);
     }
 
     public function create()
     {
-        return view('admin.position.form');
+        $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
+        $content = new $modelClass;
+        return view('admin.'.$this->model.'.form', compact('content'))->with('model', $this->model);
     }
 
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
+        $validator = Validator::make($request->all(), $this->validator);
 
         if ($validator->fails()) {
-            return redirect('admin/positions/create')
+            return redirect('admin/'.$this->model.'/create')
                 ->withErrors($validator)
                 ->withInput();
         }
         $data = $request->all();
 
-        Position::create($data);
-        flash()->success('Success create position!');
-        return redirect('admin/positions');
+        if ($request->file('image') && $request->file('image')->isValid()) {
+            $data['image'] = $this->saveImage($request->file('image'));
+        } else {
+            unset($data['image']);
+        }
+
+        $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
+        $modelClass::create($data);
+        flash()->success('Success  create '.$this->model.'!');
+        return redirect('admin/'.$this->model);
 
     }
 
     public function edit($id)
     {
-        $position = Position::find($id);
-        return view('admin.position.form', compact('position'));
+        $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
+        $content = $modelClass::find($id);
+        return view('admin.'.$this->model.'.form', compact('content'))->with('model', $this->model);
     }
 
     public function update($id, Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
+        $validator = Validator::make($request->all(), $this->validator);
 
         if ($validator->fails()) {
-            return redirect('admin/positions/' . $id . '/edit')
+            return redirect('admin/'.$this->model.'/' . $id . '/edit')
                 ->withErrors($validator)
                 ->withInput();
         }
-        $position = Position::find($id);
+        $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
+        $content = $modelClass::find($id);
         $data = $request->all();
-        $position->update($data);
+        if ($request->file('image') && $request->file('image')->isValid()) {
+            $data['image'] = $this->saveImage($request->file('image'), $content->image);
+        } else {
+            unset($data['image']);
+        }
+        $content->update($data);
 
-        flash()->success('Success update position!');
-        return redirect('admin/positions');
+        flash()->success('Success update '.$this->model.'!');
+        return redirect('admin/'.$this->model);
     }
 
     public function destroy($id)
     {
-        Position::find($id)->delete();
-        flash()->success('Success delete position!');
-        return redirect('admin/positions');
+        $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
+        $content = $modelClass::find($id);
+        $content->delete();
+        flash()->success('Success delete '.$this->model.'!');
+        return redirect('admin/'.$this->model);
     }
 }

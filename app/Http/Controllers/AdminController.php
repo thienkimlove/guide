@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use Image;
 use Laravel\Socialite\Facades\Socialite;
 
 class AdminController extends Controller
@@ -71,6 +72,16 @@ class AdminController extends Controller
     public function index()
     {
        return view('admin.index');
+    }
+
+    public function saveImage($file, $old = null)
+    {
+        $filename = md5(uniqid().'_'.time()) . '.' . $file->getClientOriginalExtension();
+        Image::make($file->getRealPath())->save(public_path('files/' . $filename));
+        if ($old) {
+            @unlink(public_path('files/' . $old));
+        }
+        return $filename;
     }
 
 }

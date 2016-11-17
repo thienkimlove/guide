@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Position</h1>
+            <h1 class="page-header">Ngọc bổ trợ</h1>
         </div>
 
     </div>
@@ -17,18 +17,24 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
+                                <th>Image</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($positions as $position)
+                            @foreach($contents as $content)
                                 <tr>
-                                    <td>{{$position->id}}</td>
-                                    <td><a href="{{url('admin/characters/?position='. $position->id)}}">{{$position->name}}</a></td>
-
+                                    <td>{{$content->id}}</td>
+                                    <td>{{$content->name}}</td>
+                                    <td><img src="{{url('img/cache/small', $content->image)}}" /></td>
                                     <td>
-                                        <button id-attr="{{$position->id}}" class="btn btn-primary btn-sm edit-content" type="button">Edit</button>&nbsp;
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['positions.destroy', $position->id]]) !!}
+                                        <button id-attr="{{$content->id}}"
+                                                content-attr="{{$model}}"
+                                                class="btn btn-primary btn-sm edit-content"
+                                                type="button">
+                                            Edit
+                                        </button>&nbsp;
+                                        {!! Form::open(['method' => 'DELETE', 'route' => [$model.'.destroy', $content->id]]) !!}
                                         <button type="submit" class="btn btn-danger btn-mini">Delete</button>
                                         {!! Form::close() !!}
                                     </td>
@@ -40,11 +46,11 @@
                     </div>
                     <div class="row">
 
-                        <div class="col-sm-6">{!!$positions->render()!!}</div>
+                        <div class="col-sm-6">{!!$contents->render()!!}</div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <button class="btn btn-primary add-content" type="button">Add</button>
+                            <button class="btn btn-primary add-content" content-attr="{{$model}}" type="button">Add</button>
                         </div>
                     </div>
 
@@ -61,10 +67,10 @@
     <script>
         $(function(){
             $('.add-content').click(function(){
-                window.location.href = window.baseUrl + '/admin/positions/create';
+                window.location.href = window.baseUrl + '/admin/'+$(this).attr('content-attr')+'/create';
             });
             $('.edit-content').click(function(){
-                window.location.href = window.baseUrl + '/admin/positions/' + $(this).attr('id-attr') + '/edit';
+                window.location.href = window.baseUrl + '/admin/'+$(this).attr('content-attr')+'/' + $(this).attr('id-attr') + '/edit';
             });
         });
     </script>

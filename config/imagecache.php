@@ -54,6 +54,42 @@ return array(
         'small' => 'Intervention\Image\Templates\Small',
         'medium' => 'Intervention\Image\Templates\Medium',
         'large' => 'Intervention\Image\Templates\Large',
+        '60x60' => function($image) {
+            return $image->fit(60, 60);
+        },
+        '183x183' => function($image) {
+            return $image->fit(183, 183);
+        },
+        '49x47' => function($image) {
+            return $image->fit(49, 47);
+        },
+        '350x634' => function($image) {
+            return $image->fit(350, 634);
+        },
+        '129x143' => function($image) {
+            return $image->fit(129, 143);
+        },
+        '124x145' => function($image) {
+            return $image->fit(124, 145);
+        },
+        '220x220' => function($image) {
+            return $image->fit(220, 220);
+        },
+        '645x385' => function($image) {
+            return $image->fit(645, 385);
+        },
+        '80x88' => function($image) {
+            return $image->fit(80, 88);
+        },
+        '91x91' => function($image) {
+            return $image->fit(91, 91);
+        },
+        '142x139' => function($image) {
+            return $image->fit(142, 139);
+        },
+        '103x103' => function($image) {
+            return $image->fit(103, 103);
+        },
     ),
 
     /*
