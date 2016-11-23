@@ -94,6 +94,12 @@ class ContentsController extends AdminController
             unset($data['image']);
         }
 
+        if ($request->file('table_support_1') && $request->file('table_support_1')->isValid()) {
+            $data['table_support_1'] = $this->saveImage($request->file('table_support_1'));
+        } else {
+            unset($data['table_support_1']);
+        }
+
         $modelClass = '\\App\\' . ucfirst(str_singular($this->model));
         $content = $modelClass::create($data);
 
@@ -134,6 +140,13 @@ class ContentsController extends AdminController
         } else {
             unset($data['image']);
         }
+
+        if ($request->file('table_support_1') && $request->file('table_support_1')->isValid()) {
+            $data['table_support_1'] = $this->saveImage($request->file('table_support_1'));
+        } else {
+            unset($data['table_support_1']);
+        }
+
         $content->update($data);
 
 

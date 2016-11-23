@@ -60,7 +60,7 @@ class CreateTableContents extends Migration
             $table->integer('equipment_id')->unsigned()->index();
             $table->foreign('equipment_id')->references('id')->on('equipments')->onDelete('cascade');
 
-            $table->enum('type', ['khoi_dau', 'lan_ve_dau_tien', 'tran_phai', 'hoan_chinh', 'tuy_chon']);
+            $table->enum('type', ['khoi_dau', 'lan_ve_dau_tien', 'giua_tran', 'tran_phai', 'hoan_chinh', 'tuy_chon']);
 
         });
 
